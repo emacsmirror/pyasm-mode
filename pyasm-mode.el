@@ -265,6 +265,8 @@
     "LOAD_DEREF"
     "LOAD_FAST"
     "LOAD_FAST_AND_CLEAR"
+    "LOAD_FAST_BORROW"
+    "LOAD_FAST_BORROW_LOAD_FAST_BORROW"
     "LOAD_FAST_CHECK"
     "LOAD_FAST_LOAD_FAST"
     "LOAD_FROM_DICT_OR_DEREF"
@@ -399,18 +401,24 @@
   (list
    ;; (cons "# Method Name:" 'pyasm-section-face)
 
-   (cons " \\([0-9]+\\) " 'font-lock-function-name-face)
+   (cons " \\([0-9]+\\) " 'font-lock-variable-name-face)
 
    ;; Operator names
    (cons
     (concat "\\<" (regexp-opt pyasm-operators t) "\\>")
-    'font-lock-variable-name-face)
+    'font-lock-type-face)
 
-   ;; Jumps to line number
+   ;; Jumps to line number (dis)
+   (cons "(to L[0-9]+)" 'font-lock-type-face)
+
+   ;; Jumps to line number (xdis)
    (cons "(to [0-9]+)" 'font-lock-type-face)
 
-   ;; Labels at start of line
-   (cons "^\s*L?[0-9]+:" 'font-lock-constant-face)
+   ;; Jumps to line number (xdis)
+   (cons "\\(to [0-9]+\\(?:, line [0-9]+\\)?\\)" 'font-lock-type-face)
+
+   ;; Line labels
+   (cons "\s*L?[0-9]+:" 'font-lock-constant-face)
 
    ;; Pre 3.6 Operand
    ;; (cons "|[0-9a-f][0-9a-f] [0-9a-f ][0-9a-f ][0-9a-f ][0-9a-f ][0-9[a-f ]" 'font-lock-type-face)
